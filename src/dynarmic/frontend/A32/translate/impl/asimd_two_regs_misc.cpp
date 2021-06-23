@@ -608,6 +608,132 @@ bool TranslatorVisitor::asimd_VSHLL_max(bool D, size_t sz, size_t Vd, bool M, si
     return true;
 }
 
+bool TranslatorVisitor::asimd_VRINTN(bool D, size_t sz, size_t Vd, bool Q, bool M, size_t Vm) {
+    if (Q && (Common::Bit<0>(Vd) || Common::Bit<0>(Vm))) {
+        return UndefinedInstruction();
+    }
+
+    if (sz == 0b00 || sz == 0b11) {
+        return UndefinedInstruction();
+    }
+
+    const size_t esize = 8U << sz;
+    const auto rounding_mode = FP::RoundingMode::ToNearest_TieEven;
+    const auto d = ToVector(Q, Vd, D);
+    const auto m = ToVector(Q, Vm, M);
+
+    const auto operand = ir.GetVector(m);
+    const auto result = ir.FPVectorRoundInt(esize, operand, rounding_mode, false, false);
+
+    ir.SetVector(d, result);
+    return true;
+}
+
+bool TranslatorVisitor::asimd_VRINTX(bool D, size_t sz, size_t Vd, bool Q, bool M, size_t Vm) {
+    if (Q && (Common::Bit<0>(Vd) || Common::Bit<0>(Vm))) {
+        return UndefinedInstruction();
+    }
+
+    if (sz == 0b00 || sz == 0b11) {
+        return UndefinedInstruction();
+    }
+
+    const size_t esize = 8U << sz;
+    const auto rounding_mode = FP::RoundingMode::ToNearest_TieEven;
+    const auto d = ToVector(Q, Vd, D);
+    const auto m = ToVector(Q, Vm, M);
+
+    const auto operand = ir.GetVector(m);
+    const auto result = ir.FPVectorRoundInt(esize, operand, rounding_mode, true, false);
+
+    ir.SetVector(d, result);
+    return true;
+}
+
+bool TranslatorVisitor::asimd_VRINTA(bool D, size_t sz, size_t Vd, bool Q, bool M, size_t Vm) {
+    if (Q && (Common::Bit<0>(Vd) || Common::Bit<0>(Vm))) {
+        return UndefinedInstruction();
+    }
+
+    if (sz == 0b00 || sz == 0b11) {
+        return UndefinedInstruction();
+    }
+
+    const size_t esize = 8U << sz;
+    const auto rounding_mode = FP::RoundingMode::ToNearest_TieAwayFromZero;
+    const auto d = ToVector(Q, Vd, D);
+    const auto m = ToVector(Q, Vm, M);
+
+    const auto operand = ir.GetVector(m);
+    const auto result = ir.FPVectorRoundInt(esize, operand, rounding_mode, false, false);
+
+    ir.SetVector(d, result);
+    return true;
+}
+
+bool TranslatorVisitor::asimd_VRINTZ(bool D, size_t sz, size_t Vd, bool Q, bool M, size_t Vm) {
+    if (Q && (Common::Bit<0>(Vd) || Common::Bit<0>(Vm))) {
+        return UndefinedInstruction();
+    }
+
+    if (sz == 0b00 || sz == 0b11) {
+        return UndefinedInstruction();
+    }
+
+    const size_t esize = 8U << sz;
+    const auto rounding_mode = FP::RoundingMode::TowardsZero;
+    const auto d = ToVector(Q, Vd, D);
+    const auto m = ToVector(Q, Vm, M);
+
+    const auto operand = ir.GetVector(m);
+    const auto result = ir.FPVectorRoundInt(esize, operand, rounding_mode, false, false);
+
+    ir.SetVector(d, result);
+    return true;
+}
+
+bool TranslatorVisitor::asimd_VRINTM(bool D, size_t sz, size_t Vd, bool Q, bool M, size_t Vm) {
+    if (Q && (Common::Bit<0>(Vd) || Common::Bit<0>(Vm))) {
+        return UndefinedInstruction();
+    }
+
+    if (sz == 0b00 || sz == 0b11) {
+        return UndefinedInstruction();
+    }
+
+    const size_t esize = 8U << sz;
+    const auto rounding_mode = FP::RoundingMode::TowardsMinusInfinity;
+    const auto d = ToVector(Q, Vd, D);
+    const auto m = ToVector(Q, Vm, M);
+
+    const auto operand = ir.GetVector(m);
+    const auto result = ir.FPVectorRoundInt(esize, operand, rounding_mode, false, false);
+
+    ir.SetVector(d, result);
+    return true;
+}
+
+bool TranslatorVisitor::asimd_VRINTP(bool D, size_t sz, size_t Vd, bool Q, bool M, size_t Vm) {
+    if (Q && (Common::Bit<0>(Vd) || Common::Bit<0>(Vm))) {
+        return UndefinedInstruction();
+    }
+
+    if (sz == 0b00 || sz == 0b11) {
+        return UndefinedInstruction();
+    }
+
+    const size_t esize = 8U << sz;
+    const auto rounding_mode = FP::RoundingMode::TowardsPlusInfinity;
+    const auto d = ToVector(Q, Vd, D);
+    const auto m = ToVector(Q, Vm, M);
+
+    const auto operand = ir.GetVector(m);
+    const auto result = ir.FPVectorRoundInt(esize, operand, rounding_mode, false, false);
+
+    ir.SetVector(d, result);
+    return true;
+}
+
 bool TranslatorVisitor::asimd_VCVT_half(bool D, size_t sz, size_t Vd, bool half_to_single, bool M, size_t Vm) {
     if (sz != 0b01) {
         return UndefinedInstruction();
