@@ -317,6 +317,15 @@ U32U64 IREmitter::And(const U32U64& a, const U32U64& b) {
     }
 }
 
+U32U64 IREmitter::AndNot(const U32U64& a, const U32U64& b) {
+    ASSERT(a.GetType() == b.GetType());
+    if (a.GetType() == Type::U32) {
+        return Inst<U32>(Opcode::AndNot32, a, b);
+    } else {
+        return Inst<U64>(Opcode::AndNot64, a, b);
+    }
+}
+
 U32U64 IREmitter::Eor(const U32U64& a, const U32U64& b) {
     ASSERT(a.GetType() == b.GetType());
     if (a.GetType() == Type::U32) {
@@ -956,6 +965,10 @@ U128 IREmitter::VectorAdd(size_t esize, const U128& a, const U128& b) {
 
 U128 IREmitter::VectorAnd(const U128& a, const U128& b) {
     return Inst<U128>(Opcode::VectorAnd, a, b);
+}
+
+U128 IREmitter::VectorAndNot(const U128& a, const U128& b) {
+    return Inst<U128>(Opcode::VectorAndNot, a, b);
 }
 
 U128 IREmitter::VectorArithmeticShiftRight(size_t esize, const U128& a, u8 shift_amount) {

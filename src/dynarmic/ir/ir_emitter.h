@@ -144,6 +144,7 @@ public:
     U32U64 UnsignedDiv(const U32U64& a, const U32U64& b);
     U32U64 SignedDiv(const U32U64& a, const U32U64& b);
     U32U64 And(const U32U64& a, const U32U64& b);
+    U32U64 AndNot(const U32U64& a, const U32U64& b);
     U32U64 Eor(const U32U64& a, const U32U64& b);
     U32U64 Or(const U32U64& a, const U32U64& b);
     U32U64 Not(const U32U64& a);
@@ -240,6 +241,7 @@ public:
     U128 VectorAbs(size_t esize, const U128& a);
     U128 VectorAdd(size_t esize, const U128& a, const U128& b);
     U128 VectorAnd(const U128& a, const U128& b);
+    U128 VectorAndNot(const U128& a, const U128& b);
     U128 VectorArithmeticShiftRight(size_t esize, const U128& a, u8 shift_amount);
     U128 VectorArithmeticVShift(size_t esize, const U128& a, const U128& b);
     U128 VectorBroadcast(size_t esize, const UAny& a);
